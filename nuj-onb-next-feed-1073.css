@@ -1,0 +1,782 @@
+/* Stacking: overlay sits above swipe deck */
+.device > .onb-next {
+  z-index: 24;
+}
+
+/**
+ * Figma 1073:30079 — For You feed full-screen (scoped to #onb-next-screen).
+ * Assets: ./nuj-figma-assets/ (get_design_context export). Design file:
+ * https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/%F0%9F%91%8B-2026-onboading?node-id=1073-30079&m=dev
+ */
+#onb-next-screen.onb-next.feed-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  color: #f6f6f6;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  transition:
+    opacity 0.34s cubic-bezier(0.33, 1, 0.32, 1),
+    visibility 0s linear 0.34s;
+}
+
+.device.is-onb-next-screen #onb-next-screen.onb-next.feed-screen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.34s cubic-bezier(0.33, 1, 0.32, 1),
+    visibility 0s linear 0s;
+}
+
+#onb-next-screen .feed-screen__status {
+  flex-shrink: 0;
+  height: var(--status-h, 47px);
+  position: relative;
+  overflow: hidden;
+  padding-top: max(0px, env(safe-area-inset-top, 0px));
+}
+
+#onb-next-screen .feed-screen__status-time {
+  position: absolute;
+  left: 64px;
+  top: 50%;
+  transform: translate(-50%, calc(-50% - 0.5px));
+  font-family: var(--font-sf, system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.41px;
+  color: #ffffff;
+  text-align: center;
+  width: 58px;
+}
+
+#onb-next-screen .feed-screen__status-ico {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#onb-next-screen .feed-screen__status-ico img {
+  display: block;
+  max-width: none;
+  height: auto;
+}
+
+#onb-next-screen .feed-screen__status-ico--sig {
+  right: 84.7px;
+  width: 21.3px;
+  height: 12.8px;
+}
+
+#onb-next-screen .feed-screen__status-ico--conn {
+  right: 60.32px;
+  width: 17.68px;
+  height: 13px;
+}
+
+#onb-next-screen .feed-screen__status-ico--bat {
+  right: 25.57px;
+  width: 29.43px;
+  height: 14px;
+}
+
+#onb-next-screen .feed-screen__tabbar {
+  flex-shrink: 0;
+  height: var(--nav-h, 44px);
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  width: 100%;
+}
+
+#onb-next-screen .feed-screen__tab-ico-wrap {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+#onb-next-screen .feed-screen__tab-ico-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#onb-next-screen .feed-screen__tab-lead {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+}
+
+#onb-next-screen .feed-screen__tab-scroll {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#onb-next-screen .feed-screen__tab-scroll-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#onb-next-screen .feed-screen__tab {
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.55);
+  position: relative;
+  padding: 0 2px 8px;
+}
+
+#onb-next-screen .feed-screen__tab--wide span {
+  letter-spacing: -0.41px;
+}
+
+#onb-next-screen .feed-screen__tab span {
+  display: inline-block;
+}
+
+#onb-next-screen .feed-screen__tab--active {
+  color: #ffffff;
+}
+
+#onb-next-screen .feed-screen__tab--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 1px;
+}
+
+#onb-next-screen .feed-screen__tab-trail {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+}
+
+#onb-next-screen .feed-screen__stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  width: 100%;
+  background: #000;
+}
+
+#onb-next-screen .feed-screen__video {
+  position: absolute;
+  inset: 0;
+}
+
+#onb-next-screen .feed-screen__video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+#onb-next-screen .feed-screen__video-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 18%;
+  min-height: 96px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+}
+
+#onb-next-screen .feed-screen__video-bot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  min-height: 140px;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+}
+
+#onb-next-screen .feed-screen__stage-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* stage 底即底栏顶：此处 bottom 相对舞台，与 main-nav 之间留 10px（勿再加 83px，否则会整块上移） */
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 12px 0;
+  pointer-events: none;
+  gap: 0;
+}
+
+#onb-next-screen .feed-screen__meta {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: calc(100% - 60px);
+  padding-right: 0;
+  pointer-events: auto;
+}
+
+#onb-next-screen .feed-screen__user {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.3;
+  color: #f0f0f0;
+}
+
+#onb-next-screen .feed-screen__desc {
+  margin: 0 0 8px;
+  max-width: 278px;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.3;
+  color: #f0f0f0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#onb-next-screen .feed-screen__music-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 278px;
+}
+
+#onb-next-screen .feed-screen__music-row .feed-screen__music-ico {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #f0f0f0;
+}
+
+#onb-next-screen .feed-screen__music-row .feed-screen__music-ico svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+#onb-next-screen .feed-screen__music-row span:last-child {
+  font-size: 14px;
+  line-height: 1.3;
+  color: #f0f0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 右侧互动 Figma「Interaction buttons」1073:30787
+ * https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/?node-id=1073-30787 */
+#onb-next-screen .feed-screen__rail {
+  flex-shrink: 0;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  pointer-events: auto;
+  position: relative;
+  z-index: 4;
+  box-sizing: border-box;
+}
+
+#onb-next-screen .feed-screen__rail-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#onb-next-screen .feed-screen__rail-count {
+  margin-top: 0;
+  width: 100%;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #f6f6f6;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(22, 24, 35, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon_Color/*_Shadow_Alt：稿中为 32×32 槽位，矢量自带投影无需再 drop-shadow */
+#onb-next-screen .feed-screen__rail-ico {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+#onb-next-screen .feed-screen__rail-ico img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Avatar + Follow：pt 4 pr 6 pb 10 pl 10 */
+#onb-next-screen .feed-screen__rail-block--avatar-follow {
+  padding: 4px 6px 10px 10px;
+  align-items: center;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-visual {
+  position: relative;
+  width: 52.25px;
+  height: 52.25px;
+  flex-shrink: 0;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-base {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 915.75px;
+  overflow: hidden;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-base .feed-screen__avatar-face {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-stroke {
+  position: absolute;
+  inset: -1.14%;
+  pointer-events: none;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-stroke img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 52.25px;
+  height: 52.25px;
+  pointer-events: none;
+}
+
+#onb-next-screen .feed-screen__rail-avatar-ring img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#onb-next-screen .feed-screen__follow-badge {
+  position: relative;
+  margin-top: -10px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+#onb-next-screen .feed-screen__follow-svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* Like / Comment / Bookmark / Share：pl 10 pr 6 py 8 */
+#onb-next-screen .feed-screen__rail-block--like,
+#onb-next-screen .feed-screen__rail-block--comment,
+#onb-next-screen .feed-screen__rail-block--bookmark,
+#onb-next-screen .feed-screen__rail-block--share {
+  padding: 8px 6px 8px 10px;
+  margin-top: 0;
+}
+
+#onb-next-screen .feed-screen__rail-block--disk {
+  padding: 8px 8px 12px 12px;
+  align-items: flex-start;
+}
+
+#onb-next-screen .feed-screen__disk-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+#onb-next-screen .feed-screen__disk-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bottom tab bar — Figma Mainav node 1617:197602
+ * https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/?node-id=1617-197602
+ *（与 Figma Desktop MCP get_design_context 导出一致；素材在同目录 nuj-figma-assets） */
+#onb-next-screen .main-nav {
+  flex-shrink: 0;
+  position: relative;
+  width: 100%;
+  min-height: 83px;
+  height: calc(83px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
+  background: #000;
+  /* Create 按钮略凸起，需允许纵向溢出，避免被裁切 */
+  overflow-x: hidden;
+  overflow-y: visible;
+  z-index: 6;
+  pointer-events: auto;
+}
+
+#onb-next-screen .home-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 34px;
+  overflow: hidden;
+}
+
+#onb-next-screen .grabber {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 5px;
+  background: #fff;
+  border-radius: 999px;
+}
+
+#onb-next-screen .bottom-nav-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+  min-height: 49px;
+  background: #000;
+  display: flex;
+  gap: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px 0;
+  box-sizing: border-box;
+}
+
+#onb-next-screen .bottom-nav-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: transparent;
+  border-top: 0.5px solid var(--nav-sep, rgba(255, 255, 255, 0.19));
+}
+
+#onb-next-screen .bar-cell {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 49px;
+  padding: 2px 0 4px;
+  overflow: visible;
+}
+
+#onb-next-screen .bar-cell .icon-frame-32 {
+  width: 32px;
+  height: 32px;
+  margin-bottom: -1px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+#onb-next-screen .feed-nav-icon-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Rounded / Home → Subtract（9dc63aa…） */
+#onb-next-screen .feed-nav-home-rounded {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+#onb-next-screen .feed-nav-home-subtract {
+  position: absolute;
+  width: 20.5px;
+  height: 21.139px;
+  left: 0.88px;
+  top: 0.68px;
+}
+
+#onb-next-screen .feed-nav-home-subtract img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+}
+
+/* Rounded / Friend：inset 12.5% 内双 Union，顺序与 Figma 一致（左 6c2f48，右 0d10014） */
+#onb-next-screen .feed-nav-friend-inner {
+  position: absolute;
+  inset: 12.5%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#onb-next-screen .feed-nav-friends__slot--union {
+  position: absolute;
+  z-index: 1;
+  left: 0.42%;
+  right: 28.91%;
+  top: 1.1px;
+  height: 19.902px;
+}
+
+#onb-next-screen .feed-nav-friends__slot--union1 {
+  position: absolute;
+  z-index: 2;
+  left: 59.51%;
+  right: 0.5%;
+  top: 2.29px;
+  height: 16.778px;
+}
+
+#onb-next-screen .feed-nav-friends__slot--union img,
+#onb-next-screen .feed-nav-friends__slot--union1 img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* Rounded / Inbox */
+#onb-next-screen .feed-nav-inbox-inner {
+  position: absolute;
+  inset: 12.5%;
+}
+
+#onb-next-screen .feed-nav-inbox-union {
+  position: absolute;
+  width: 22px;
+  height: 21.617px;
+  left: 0.5px;
+  top: 1px;
+}
+
+#onb-next-screen .feed-nav-inbox-union img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+}
+
+/* Profile：Basic / Home 实例内 Union（bdbe0a0…） */
+#onb-next-screen .feed-nav-profile-inner {
+  position: absolute;
+  inset: 12.5%;
+  overflow: hidden;
+}
+
+#onb-next-screen .feed-nav-profile-union {
+  position: absolute;
+  height: 21.766px;
+  left: 9.38%;
+  right: 9.38%;
+  top: 0.5px;
+}
+
+#onb-next-screen .feed-nav-profile-union img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+}
+
+#onb-next-screen .bar-label {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.2287px;
+  text-align: center;
+  width: 100%;
+}
+
+#onb-next-screen .bar-label.on {
+  color: #f6f6f6;
+}
+
+#onb-next-screen .bar-label.off {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#onb-next-screen .tab3 {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+}
+
+/* Basic / Create_Color：底图 9d03d6f… + 双 Vector 线（Figma 1332:16380） */
+#onb-next-screen .feed-create-btn {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+  margin-top: -6px;
+}
+
+#onb-next-screen .feed-create-base-wrap {
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 28.775px;
+}
+
+#onb-next-screen .feed-create-base-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+}
+
+#onb-next-screen .feed-create-line-v {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 12px;
+  z-index: 1;
+}
+
+#onb-next-screen .feed-create-stroke-pad {
+  position: absolute;
+  inset: -12.5% -1.5px;
+}
+
+#onb-next-screen .feed-create-line-v .feed-create-stroke-pad img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+#onb-next-screen .feed-create-line-h-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+#onb-next-screen .feed-create-rot {
+  transform: rotate(-90deg);
+  flex: none;
+}
+
+#onb-next-screen .feed-create-line-h {
+  width: 0;
+  height: 12px;
+  position: relative;
+}
+
+#onb-next-screen .feed-create-line-h .feed-create-stroke-pad img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #onb-next-screen.onb-next.feed-screen,
+  .device.is-onb-next-screen #onb-next-screen.onb-next.feed-screen {
+    transition: none !important;
+  }
+}

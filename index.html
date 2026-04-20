@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Template NUJ — Figma 1455:37959</title>
+  <style>
+    :root {
+      --ui-page-flat-1: #ffffff;
+      --ui-page-flat-2: #f8f8f8;
+      --ui-text-1-display: #000000;
+      --ui-text-secondary: #8e8e93;
+      --ios-status-text: #000000;
+      --phone-w: 390px;
+      --status-h: 47px;
+      --nav-h: 44px;
+      --font-sans: "Inter", "SF Pro Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-text: "Inter", "SF Pro Text", system-ui, -apple-system, sans-serif;
+      --font-sf: "SF Pro Text", -apple-system, system-ui, sans-serif;
+      --pill-border-radius: 16px;
+      --bubble-radius-lg: 22px;
+      --bubble-radius-sm: 6px;
+      --submit-disabled-bg: #ececec;
+      --submit-disabled-text: rgba(0, 0, 0, 0.34);
+      /* 与 figma-nuj-template-1474-55477 完成态 CTA 一致 */
+      --cta-primary: #fe2c55;
+      --cta-primary-press: #e61e4a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: #f5f5f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      font-family: var(--font-sans);
+    }
+
+    .device {
+      position: relative;
+      width: min(var(--phone-w), 100vw - 24px);
+      max-width: var(--phone-w);
+      height: min(844px, 100dvh - 24px);
+      max-height: min(844px, 100dvh - 24px);
+      background: var(--ui-page-flat-1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    /**
+     * Figma 1635:364015 Feed2 — 与画板一致：全屏视频底 + 顶栏/状态叠层 + Info+Rail 贴底（bottom:83px）+ MainNav
+     */
+    #onb-replica-1635.onb-replica-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 80;
+      display: flex;
+      flex-direction: column;
+      background: #000000;
+      color: #f6f6f6;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      font-family: var(--font-sans), "TikTok Sans", system-ui, -apple-system, sans-serif;
+      transition:
+        opacity 0.32s cubic-bezier(0.33, 1, 0.32, 1),
+        visibility 0s linear 0.32s;
+    }
+
+    .device.is-onb-replica-open #onb-replica-1635.onb-replica-screen {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 0.32s cubic-bezier(0.33, 1, 0.32, 1),
+        visibility 0s linear 0s;
+    }
+
+    .r1635-canvas {
+      flex: 1 1 auto;
+      min-height: 0;
+      position: relative;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .r1635-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .r1635-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .r1635-video-el {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .r1635-ov-top {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 136px;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .r1635-ov-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scaleX(-1) rotate(180deg);
+    }
+
+    .r1635-ov-bot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 158px;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .r1635-ov-bot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .r1635-hero {
+      position: absolute;
+      left: 50%;
+      top: 22%;
+      transform: translateX(-50%);
+      z-index: 4;
+      text-align: center;
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.92);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .r1635-hero-t1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    .r1635-hero-t2 {
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: lowercase;
+    }
+
+    .r1635-status {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 47px;
+      z-index: 20;
+      overflow: hidden;
+      padding-top: max(0px, env(safe-area-inset-top, 0px));
+      pointer-events: none;
+    }
+
+    .r1635-status-time {
+      position: absolute;
+      left: 64px;
+      top: 50%;
+      transform: translate(-50%, calc(-50% - 0.5px));
+      font-family: var(--font-sf);
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 22px;
+      letter-spacing: -0.41px;
+      color: #ffffff;
+      text-align: center;
+      width: 58px;
+    }
+
+    .r1635-status-ico {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .r1635-status-ico img {
+      display: block;
+      max-width: none;
+      height: auto;
+    }
+
+    .r1635-status-ico--sig {
+      right: 84.7px;
+    }
+
+    .r1635-status-ico--conn {
+      right: 60.32px;
+    }
+
+    .r1635-status-ico--bat {
+      right: 25.57px;
+    }
+
+    .r1635-tabbar {
+      position: absolute;
+      top: 47px;
+      left: 0;
+      right: 0;
+      height: 44px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    .r1635-tab-lead,
+    .r1635-tab-trail {
+      flex-shrink: 0;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 8px;
+      box-sizing: border-box;
+    }
+
+    .r1635-tab-lead img,
+    .r1635-tab-trail img {
+      width: 24px;
+      height: 24px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .r1635-tab-center {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 44px;
+      gap: 4px;
+      padding: 0 8px;
+    }
+
+    .r1635-tab {
+      font-family: var(--font-text), "TikTok Text", var(--font-sans), system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 17px;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0 8px 9px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .r1635-tab--active {
+      font-weight: 700;
+      color: #f6f6f6;
+    }
+
+    .r1635-tab--active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 2px;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 2px;
+      background: #f6f6f6;
+      border-radius: 1px;
+    }
+
+    .r1635-dock {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 83px;
+      z-index: 10;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .r1635-meta {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: calc(100% - 48px);
+      padding: 12px 12px 10px 12px;
+      box-sizing: border-box;
+      pointer-events: auto;
+    }
+
+    .r1635-meta-inner {
+      max-width: 278px;
+      padding-right: 40px;
+    }
+
+    .r1635-meta-user {
+      margin: 0 0 8px;
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 1.3;
+      color: #f0f0f0;
+    }
+
+    .r1635-meta-desc {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.3;
+      color: #f0f0f0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-height: 2.6em;
+    }
+
+    .r1635-meta-music {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 278px;
+      min-height: 18px;
+    }
+
+    .r1635-meta-music img {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .r1635-meta-music span {
+      font-size: 14px;
+      line-height: 1.3;
+      color: #f0f0f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .r1635-rail {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 48px;
+      min-width: 48px;
+      padding: 0;
+      box-sizing: border-box;
+      pointer-events: auto;
+    }
+
+    .r1635-rail-ava {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 6px 10px 10px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .r1635-rail-ava-ring {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: visible;
+    }
+
+    .r1635-rail-ava-ring img.r1635-rail-ava-face {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .r1635-rail-ava-ring img.r1635-rail-ava-stroke {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 45px;
+      height: 45px;
+      pointer-events: none;
+    }
+
+    .r1635-rail-follow {
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .r1635-rail-follow img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .r1635-rail-act {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 8px 6px 8px 10px;
+      box-sizing: border-box;
+    }
+
+    /* Figma Icon_Color/*_Shadow：32 外框 + 内层 crop + bleed，与设计稿 inset 一致 */
+    .r1635-feed-ico32 {
+      width: 32px;
+      height: 32px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .r1635-feed-ico32__crop {
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    .r1635-feed-ico32__bleed {
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    .r1635-feed-ico32__bleed img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: fill;
+      object-position: center;
+    }
+
+    /* Share 阴影区非严格等比，fill 会拉扁箭头；contain 保持图形比例 */
+    .r1635-feed-ico32--share .r1635-feed-ico32__bleed img {
+      object-fit: contain;
+    }
+
+    .r1635-feed-ico32--like .r1635-feed-ico32__crop {
+      top: 9.42%;
+      right: 4.17%;
+      bottom: 7.8%;
+      left: 4.17%;
+    }
+
+    .r1635-feed-ico32--like .r1635-feed-ico32__bleed {
+      top: -7.55%;
+      right: -10.23%;
+      bottom: -15.1%;
+      left: -10.23%;
+    }
+
+    .r1635-feed-ico32--comment .r1635-feed-ico32__crop {
+      top: 6.25%;
+      right: 5.04%;
+      bottom: 6.27%;
+      left: 5.21%;
+    }
+
+    .r1635-feed-ico32--comment .r1635-feed-ico32__bleed {
+      top: -7.14%;
+      right: -10.45%;
+      bottom: -14.29%;
+      left: -10.45%;
+    }
+
+    .r1635-feed-ico32--bookmark .r1635-feed-ico32__crop {
+      top: 10.42%;
+      right: 16.67%;
+      bottom: 14.04%;
+      left: 16.67%;
+    }
+
+    .r1635-feed-ico32--bookmark .r1635-feed-ico32__bleed {
+      top: -8.27%;
+      right: -14.06%;
+      bottom: -16.55%;
+      left: -14.06%;
+    }
+
+    .r1635-feed-ico32--share .r1635-feed-ico32__crop {
+      top: 7.29%;
+      right: 6.25%;
+      bottom: 9.38%;
+      left: 6.25%;
+    }
+
+    .r1635-feed-ico32--share .r1635-feed-ico32__bleed {
+      top: -7.5%;
+      right: -10.71%;
+      bottom: -15%;
+      left: -10.71%;
+    }
+
+    .r1635-rail-count {
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #f6f6f6;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(22, 24, 35, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .r1635-rail-disk {
+      padding: 8px 8px 12px 12px;
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .r1635-rail-disk-inner {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    /* 避免在 flex 列里被压成椭圆；等比铺满圆内 */
+    .r1635-rail-disk-inner img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .r1635-mainnav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 83px;
+      z-index: 24;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      pointer-events: auto;
+      overflow: hidden;
+    }
+
+    .r1635-navrow {
+      display: flex;
+      width: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 2px;
+      padding: 0;
+      box-sizing: border-box;
+      height: 49px;
+      min-height: 49px;
+      max-height: 49px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Figma Mainav Separator：叠在 Nav 顶边，与 Bar 同级 absolute */
+    .r1635-navrow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 0;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.19);
+      pointer-events: none;
+    }
+
+    .r1635-navcell {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 49px;
+      min-height: 49px;
+      max-height: 49px;
+      padding: 2px 0 4px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* Tab3：与其它 Bar Cell 同高，补上 pt-[2px]，否则 Create 会比左右图标高一行 */
+    .r1635-navcell--tab3 {
+      flex: 1 0 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 49px;
+      min-height: 49px;
+      max-height: 49px;
+      padding: 2px 0 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* pt 2px + 48px Create = 50px，设计 Bar 高 49px：-1px 与左右 Icon Frame 顶对齐且不溢出 */
+    .r1635-navcell--tab3 .r1635-create {
+      margin-top: -1px;
+    }
+
+    /* Bottom Nav：32px Icon Frame，与设计稿 Mainav Bar Cell 一致 */
+    .r1635-nav-ico32 {
+      width: 32px;
+      height: 32px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      margin-bottom: -1px;
+    }
+
+    .r1635-nav-home24 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      overflow: hidden;
+    }
+
+    .r1635-nav-home24 img {
+      position: absolute;
+      left: 0.88px;
+      top: 0.68px;
+      width: 20.5px;
+      height: 21.139px;
+      display: block;
+      max-width: none;
+    }
+
+    .r1635-nav-fr24 {
+      position: absolute;
+      left: 12.5%;
+      top: 12.5%;
+      right: 12.5%;
+      bottom: 12.5%;
+      overflow: hidden;
+    }
+
+    .r1635-nav-fr24-a,
+    .r1635-nav-fr24-b {
+      position: absolute;
+    }
+
+    .r1635-nav-fr24-a {
+      height: 19.902px;
+      left: 0.42%;
+      right: 28.91%;
+      top: 1.1px;
+    }
+
+    .r1635-nav-fr24-b {
+      height: 16.778px;
+      left: 59.51%;
+      right: 0.5%;
+      top: 2.29px;
+    }
+
+    .r1635-nav-fr24 img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .r1635-nav-inbox24 {
+      position: absolute;
+      inset: 12.5%;
+      overflow: hidden;
+    }
+
+    .r1635-nav-profile24 {
+      position: absolute;
+      inset: 12.5%;
+      overflow: hidden;
+    }
+
+    .r1635-nav-inbox-inner {
+      position: absolute;
+      left: 0.5px;
+      top: 1px;
+      width: 22px;
+      height: 21.617px;
+    }
+
+    .r1635-nav-inbox-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .r1635-nav-profile-inner {
+      position: absolute;
+      left: 9.38%;
+      right: 9.38%;
+      top: 0.5px;
+      height: 21.766px;
+    }
+
+    .r1635-nav-profile-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .r1635-navcell span {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: 0.2287px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      white-space: nowrap;
+    }
+
+    .r1635-navcell--on span {
+      color: #f6f6f6;
+    }
+
+    .r1635-create {
+      width: 48px;
+      height: 48px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .r1635-create-base {
+      position: absolute;
+      left: 1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 28.775px;
+    }
+
+    .r1635-create-base img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .r1635-create-plus-v {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 12px;
+      overflow: visible;
+    }
+
+    .r1635-create-plus-h {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      width: 0;
+      height: 12px;
+      overflow: visible;
+    }
+
+    /* Figma Basic/Create：矢量外包 inset-[-12.5%_-1.5px] */
+    .r1635-create-vecpad {
+      position: absolute;
+      top: -12.5%;
+      right: -1.5px;
+      bottom: -12.5%;
+      left: -1.5px;
+    }
+
+    .r1635-create-vecpad img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: fill;
+    }
+
+    .r1635-home-ind {
+      height: 34px;
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .r1635-grabber {
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 5px;
+      background: #fff;
+      border-radius: 999px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #onb-replica-1635.onb-replica-screen,
+      .device.is-onb-replica-open #onb-replica-1635.onb-replica-screen,
+      #onb-replica-364498.onb-replica-screen,
+      .device.is-onb-loading-open #onb-replica-364498.onb-replica-screen {
+        transition: none !important;
+      }
+    }
+
+    /**
+     * Figma 1635:364498 loading — 白底登录入口：状态栏 + Skip + 标题 + Phone + Or + 社交 + 条款 + Home Indicator
+     */
+    #onb-replica-364498.onb-replica-screen {
+      position: absolute;
+      inset: 0;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      color: #202020;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      font-family: var(--font-sans), "TikTok Sans", system-ui, -apple-system, sans-serif;
+      transition:
+        opacity 0.32s cubic-bezier(0.33, 1, 0.32, 1),
+        visibility 0s linear 0.32s;
+    }
+
+    .device.is-onb-loading-open #onb-replica-364498.onb-replica-screen {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 0.32s cubic-bezier(0.33, 1, 0.32, 1),
+        visibility 0s linear 0s;
+    }
+
+    .ld49-root {
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      box-sizing: border-box;
+    }
+
+    .ld49-status {
+      flex-shrink: 0;
+      position: relative;
+      height: 44px;
+      width: 100%;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .ld49-status-time {
+      position: absolute;
+      left: 48px;
+      top: 14px;
+      transform: translateX(-50%);
+      width: 54px;
+      font-family: var(--font-sf);
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: -0.045px;
+      color: #000000;
+      text-align: center;
+    }
+
+    .ld49-status-trail {
+      position: absolute;
+      right: 14.84px;
+      top: 16.8px;
+      width: 66.161px;
+      height: 11px;
+    }
+
+    /* Figma：系统图标外包 inset 负值，避免裁掉阴影 */
+    .ld49-status-trail-inner {
+      position: absolute;
+      left: 0;
+      top: -4.55%;
+      right: 0;
+      bottom: 0;
+    }
+
+    .ld49-status-trail-inner img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .ld49-nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 44px;
+      min-height: 44px;
+      padding: 0 6px;
+      background: #ffffff;
+      box-sizing: border-box;
+    }
+
+    /* Figma Nav Trailing：TikTok Text Regular 16 / rgba(0,0,0,0.48) */
+    .ld49-skip {
+      margin: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 8px 14px;
+      font-family: var(--font-text), "TikTok Text", var(--font-sans), system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.3;
+      letter-spacing: 0.0296px;
+      color: rgba(0, 0, 0, 0.48);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .ld49-skip:hover {
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    .ld49-skip:focus-visible {
+      outline: 2px solid #0066ff;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .ld49-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .ld49-hero {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 32px;
+      box-sizing: border-box;
+      min-height: 120px;
+    }
+
+    /* 与主按钮同宽思路，避免 240px 把大标题压得过窄、过早折行 */
+    .ld49-hero-inner {
+      width: 100%;
+      max-width: 326px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ld49-logo {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Figma Group：60 容器内 w 53.016，垂直微调 */
+    .ld49-logo-img {
+      position: absolute;
+      left: 50%;
+      top: 0.83%;
+      bottom: -0.83%;
+      transform: translateX(-50%);
+      width: 53.016px;
+    }
+
+    .ld49-logo-img img {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .ld49-title {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      font-family: var(--font-sans), "TikTok Sans", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-align: center;
+      color: #202020;
+      text-wrap: balance;
+    }
+
+    .ld49-panel {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 32px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    /* Figma：主按钮与下方 Or/社交不同宽；Or+社交包在 342 内 */
+    .ld49-panel-stack {
+      width: 100%;
+      max-width: 342px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .ld49-btn-phone {
+      width: 100%;
+      max-width: 326px;
+      height: 52px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 999px;
+      background: var(--cta-primary);
+      color: #ffffff;
+      font-family: var(--font-sans), "TikTok Sans", system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.3;
+      letter-spacing: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Figma Button：两侧 10×2 占位 + 图标与文案 gap 4 */
+    .ld49-btn-phone__gutter {
+      flex-shrink: 0;
+      width: 10px;
+      height: 2px;
+      pointer-events: none;
+    }
+
+    .ld49-btn-phone__row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
+    .ld49-btn-phone:hover {
+      background: var(--cta-primary-press);
+    }
+
+    .ld49-btn-phone:focus-visible {
+      outline: 2px solid #0066ff;
+      outline-offset: 2px;
+    }
+
+    .ld49-btn-phone__ico {
+      position: relative;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .ld49-btn-phone__ico-inner {
+      position: absolute;
+      top: 6.25%;
+      right: 6.14%;
+      bottom: 6.14%;
+      left: 6.25%;
+    }
+
+    .ld49-btn-phone__ico-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .ld49-btn-phone__label {
+      white-space: nowrap;
+    }
+
+    .ld49-or-wrap {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 0;
+    }
+
+    .ld49-or-line {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 0;
+      border-top: 0.5px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .ld49-or-text {
+      flex-shrink: 0;
+      padding: 0 16px;
+      font-family: var(--font-text), "TikTok Text", var(--font-sans), system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.3;
+      letter-spacing: 0.1266px;
+      color: rgba(0, 0, 0, 0.48);
+      white-space: nowrap;
+    }
+
+    .ld49-social {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .ld49-3p {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 50%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .ld49-3p:focus-visible {
+      outline: 2px solid #0066ff;
+      outline-offset: 2px;
+    }
+
+    /* 圆环严格落在 52×52 内，避免导出图 + 负 inset 在视觉上「大于」按钮 */
+    .ld49-3p-ring {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .ld49-3p-ico {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ld49-3p-ico--mail {
+      left: calc(50% + 1px);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+    }
+
+    .ld49-3p-ico--mail-inner {
+      position: absolute;
+      top: 14.58%;
+      right: 4.17%;
+      bottom: 14.58%;
+      left: 4.17%;
+    }
+
+    .ld49-3p-ico--mail-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .ld49-3p-ico--fb {
+      inset: 23.08%;
+    }
+
+    .ld49-3p-ico--fb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .ld49-3p-ico--apple {
+      top: 23.08%;
+      bottom: 23.08%;
+      left: 21.15%;
+      right: 25%;
+    }
+
+    .ld49-3p-ico--apple-inner {
+      position: absolute;
+      top: 8.33%;
+      right: 13.54%;
+      bottom: 8.33%;
+      left: 13.54%;
+    }
+
+    .ld49-3p-ico--apple-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .ld49-3p-ico--google {
+      top: 23.08%;
+      bottom: 23.08%;
+      left: 25%;
+      right: 21.15%;
+    }
+
+    .ld49-3p-ico--google-inner {
+      position: absolute;
+      top: 10.42%;
+      right: 10.42%;
+      bottom: 10.41%;
+      left: 10.42%;
+    }
+
+    .ld49-3p-ico--google-inner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* 条款 + 灰底底部：整体贴底（与 Figma 1635:364547 条款在上、底部在下） */
+    .ld49-bottom {
+      flex-shrink: 0;
+      width: 100%;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ld49-terms-wrap {
+      flex-shrink: 0;
+      width: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .ld49-terms {
+      margin: 0;
+      padding: 8px 32px;
+      font-family: var(--font-sans), "TikTok Sans", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(0, 0, 0, 0.48);
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .ld49-terms-link {
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.65);
+      text-decoration: none;
+    }
+
+    .ld49-terms-link:hover {
+      text-decoration: underline;
+    }
+
+    .ld49-footer {
+      flex-shrink: 0;
+      width: 100%;
+      background: #ffffff;
+      padding-top: 12px;
+      box-sizing: border-box;
+    }
+
+    .ld49-home-ind {
+      height: 34px;
+      width: 100%;
+      max-width: 390px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ld49-grabber {
+      position: absolute;
+      left: 50%;
+      bottom: 9px;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 5px;
+      background: #000000;
+      border-radius: 100px;
+    }
+
+    /* —— Status bar (Figma System/Status Bar) —— */
+    .status-bar {
+      height: var(--status-h);
+      flex-shrink: 0;
+      position: relative;
+      background: var(--ui-page-flat-1);
+    }
+
+    .status-time {
+      position: absolute;
+      left: 64px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-sf);
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 22px;
+      letter-spacing: -0.408px;
+      color: var(--ios-status-text);
+      text-align: center;
+      width: 58px;
+    }
+
+    .status-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+    }
+
+    .status-icon img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .status-signal {
+      right: 84.7px;
+      width: 21.298px;
+      height: 12.798px;
+      margin-top: 2.1px;
+    }
+
+    .status-connection {
+      right: 60.32px;
+      width: 17.68px;
+      height: 13px;
+      margin-top: 2px;
+    }
+
+    .status-battery {
+      right: 25.57px;
+      width: 29.432px;
+      height: 14px;
+      margin-top: 2.5px;
+    }
+
+    /* —— Navigation —— */
+    .nav-bar {
+      height: var(--nav-h);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 6px;
+      background: var(--ui-page-flat-1);
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* —— Body：与参考稿一致，整段对话白底；dock 透明，卡片仅靠投影浮起 */
+    .body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--ui-page-flat-1);
+    }
+
+    .chat-scroll {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      z-index: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chat-scroll-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: calc(12px + 40px + 6px + 14px) 0 28px;
+      min-height: min-content;
+    }
+
+    /* Tako 头像固定在主内容区左上，不参与滚动；与首条气泡同拍淡入（见 runInitialSequence） */
+    .tako-header {
+      position: absolute;
+      left: 32px;
+      top: 12px;
+      z-index: 20;
+      width: 40px;
+      flex-shrink: 0;
+      margin: 0;
+      padding: 0;
+      isolation: isolate;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tako-header.is-visible {
+      opacity: 1;
+    }
+
+    .tako-header__fade {
+      position: absolute;
+      left: -32px;
+      top: -12px;
+      width: min(280px, 82vw);
+      /* 仅罩头像一带，避免浅色层压到首条气泡上缘 */
+      height: 52px;
+      pointer-events: none;
+      z-index: 0;
+      background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.82) 45%,
+          rgba(255, 255, 255, 0) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.88) 36%,
+          rgba(255, 255, 255, 0) 78%
+        );
+    }
+
+    .tako-header .logo-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .chat-transcript {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .logo-wrap {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .logo-wrap img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-50% - 0.45px), calc(-50% + 0.38px));
+      width: 36.606px;
+      height: 38.264px;
+      object-fit: contain;
+    }
+
+    /*
+     * =============================================================================
+     * 聊天气泡 — 展示规则（产品约束，实现须与此一致）
+     * =============================================================================
+     * 【总规则】先折行，再以折行后最长一行为基准收口气泡宽度。
+     *
+     * 1. 样式表：只设 max-width（相对行宽），禁止写死 width（含固定 px / fit-content）。
+     * 2. 气泡宽度在文本完成折行之后再收口（由脚本在布局后测量行盒，见 tightenOneBubble）。
+     * 3. 最终效果：宽度 = 折行后最长一行文本宽度 + 左右对称 padding；不得用全文长度、首行长度或估算代替。
+     * 4. 多行时不得继续占用超过「最长一行」所需的额外宽度；右侧除正常 padding 外不得有「空气」。
+     * 5. 收口方式：仅用内联 max-width（px）收紧到测量值，不写 width；不超过行可用宽度。
+     * 6. 验收：任一行文字结束处到气泡右缘，除统一 padding 外无大块空白。
+     *
+     * 布局基础（CSS）：
+     * - .bubble-row：flow-root；.bubble-wrap：float + max-width:100%（左 float:left / 右 float:right）。
+     * - .bubble：display:inline-block + max-width:100%、min-width:0、overflow-wrap 防长串顶破气泡；.bubble p：display:contents；text-wrap:wrap。
+     * =============================================================================
+     */
+    .bubble-row {
+      width: 100%;
+      display: flow-root;
+      box-sizing: border-box;
+      padding-left: 32px;
+      /* 原 64px 过窄，首条中文易在「可以」等处过早断行；略收紧 tako 侧留白以换更晚 */
+      padding-right: 36px;
+    }
+
+    .bubble-row:not(.bubble-row--user) .bubble-wrap {
+      float: left;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .bubble-row--user {
+      display: flow-root;
+      padding-left: 64px;
+      padding-right: 32px;
+    }
+
+    .bubble-row--user .bubble-wrap {
+      float: right;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    /* 入场：无阴影，仅淡入（不做 translate，避免与 float/宽度收口叠加出横向漂移） */
+    .bubble-wrap {
+      min-width: 0;
+      max-width: 100%;
+      opacity: 0;
+      transform: none;
+      transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bubble-wrap.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* 小圆角朝向 tako：图标在气泡上方偏左 → 左上角为小圆角；不设 width，收口见 JS max-width */
+    .bubble {
+      display: inline-block;
+      text-align: left;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      text-wrap: wrap;
+      /* 长英文/数字/无空格串须在气泡内折行；break-word 在必要时断词，避免 keep-all 顶出圆角框 */
+      overflow-wrap: break-word;
+      word-break: normal;
+      font-family: var(--font-text);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0.0296px;
+      color: var(--ui-text-1-display);
+      background: var(--ui-page-flat-2);
+      border: none;
+      border-radius: var(--bubble-radius-sm) var(--bubble-radius-lg) var(--bubble-radius-lg) var(--bubble-radius-lg);
+      padding: 10px 16px;
+    }
+
+    .bubble p {
+      display: contents;
+      margin: 0;
+    }
+
+    .bubble p .bubble-muted {
+      color: var(--ui-text-secondary);
+    }
+
+    .bubble--user {
+      background: #00a2c9;
+      border: none;
+      border-radius: var(--bubble-radius-lg) var(--bubble-radius-lg) var(--bubble-radius-sm) var(--bubble-radius-lg);
+      padding: 8px 16px;
+      color: #ffffff;
+    }
+
+    .bubble.bubble--user p .bubble-muted {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .interest-dock {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      background: transparent;
+      padding: 14px 32px calc(24px + env(safe-area-inset-bottom, 0px)) 32px;
+      max-height: calc(100% - (24px + env(safe-area-inset-bottom, 0px)));
+      overflow: hidden;
+      transition:
+        max-height 0.48s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.42s cubic-bezier(0.25, 1, 0.5, 1),
+        padding 0.48s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /*
+     * 展开态必须裁切纵向 overflow：max-height 过渡时若子卡片 overflow 可见，
+     * 白卡会绘制到上方 chat-scroll 区域（dock z-index 更高），出现「气泡被底部题卡盖住」。
+     * 投影主要在卡片下方，此处 hidden 对观感影响小。
+     */
+    .interest-dock:not(.interest-dock--hidden) {
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .interest-dock--hidden {
+      max-height: 0;
+      opacity: 0;
+      padding: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* 底部答题卡：参考稿式白卡 + 高模糊低透明度投影；入场偏「温柔」：略长时长 + ease-out 型曲线 + 轻位移缩放 */
+    .interest-card {
+      width: 326px;
+      max-width: 100%;
+      margin: 0;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--bubble-radius-lg) var(--bubble-radius-lg) var(--bubble-radius-sm) var(--bubble-radius-lg);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 4px 20px rgba(0, 0, 0, 0.05);
+      padding: 14px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+      min-height: 0;
+      max-height: 100%;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.98);
+      transform-origin: 50% 100%;
+      transition:
+        opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease;
+    }
+
+    .interest-card.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .interest-card {
+        transform: none;
+        transition: opacity 0.2s ease;
+      }
+
+      .interest-card.is-visible {
+        transform: none;
+      }
+    }
+
+    .interest-card > .lead {
+      margin: 0;
+      font-family: var(--font-text);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.0296px;
+      color: var(--ui-text-1-display);
+      flex-shrink: 0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 8px 10px;
+      width: 100%;
+      min-height: 0;
+      flex: 1 1 auto;
+      max-height: min(268px, 41vh);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+      padding: 0;
+      margin: 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    }
+
+    .tags::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .tags::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .tags::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 999px;
+    }
+
+    .tag {
+      appearance: none;
+      cursor: pointer;
+      min-height: 40px;
+      padding: 8px 14px;
+      border-radius: var(--pill-border-radius);
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      background: #ffffff;
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.3;
+      color: #000000;
+      width: auto;
+      max-width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .tag.tag--overflow-hidden {
+      display: flex !important;
+    }
+
+    .tag:hover {
+      border-color: rgba(0, 0, 0, 0.22);
+      background: #ffffff;
+    }
+
+    .tag[aria-pressed="true"] {
+      border-color: rgba(0, 162, 201, 0.45);
+      background: rgba(0, 162, 201, 0.05);
+      box-shadow: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 42px;
+      flex-shrink: 0;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1.3;
+      cursor: not-allowed;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: var(--submit-disabled-text);
+    }
+
+    .submit-btn:not(:disabled) {
+      cursor: pointer;
+      background: #ffffff;
+      color: var(--ui-text-1-display);
+      border: 1px solid rgba(0, 0, 0, 0.14);
+    }
+
+    .submit-btn:not(:disabled):hover {
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    /* —— 最后一轮对话结束后：Continue + Home indicator（对齐 1474:55477） —— */
+    .bottom-cta {
+      flex-shrink: 0;
+      width: 100%;
+      background: var(--ui-page-flat-1);
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0;
+      pointer-events: none;
+      transition:
+        max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.34s ease,
+        padding 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bottom-cta.is-visible {
+      max-height: 200px;
+      opacity: 1;
+      padding-top: 12px;
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+      pointer-events: auto;
+    }
+
+    .bottom-inner {
+      width: 100%;
+    }
+
+    .btn-row--continue {
+      display: flex;
+      align-items: stretch;
+      padding: 0 20px;
+      gap: 0;
+    }
+
+    .btn-row-spacer {
+      width: 12px;
+      flex-shrink: 0;
+    }
+
+    .cta-btn--primary {
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: none;
+      background: var(--cta-primary);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.3;
+      letter-spacing: 0;
+      cursor: pointer;
+      box-shadow: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .cta-btn--primary:hover {
+      background: var(--cta-primary-press);
+    }
+
+    .cta-btn--primary:focus-visible {
+      outline: 2px solid #0066ff;
+      outline-offset: 2px;
+    }
+
+    .home-indicator {
+      height: 34px;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* 首屏/第二页常驻 Home Indicator；当 Continue 区出现时隐藏，避免双 bar */
+    .home-indicator--base {
+      flex-shrink: 0;
+      width: 100%;
+      background: var(--ui-page-flat-1);
+      max-height: 34px;
+      opacity: 1;
+      transition: max-height 0.28s ease, opacity 0.22s ease;
+    }
+
+    #bottomCta.is-visible + .home-indicator--base {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .home-indicator::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 5px;
+      background: var(--ios-status-text);
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <div class="device is-onb-loading-open" data-node-id="1455:37959">
+    <header class="status-bar" aria-hidden="true">
+      <span class="status-time">9:41</span>
+      <span class="status-icon status-signal">
+        <img src="https://www.figma.com/api/mcp/asset/69a9e90c-3ab9-4c0e-ae25-8a5d8768d7c4" alt="" width="22" height="13" />
+      </span>
+      <span class="status-icon status-connection">
+        <img src="https://www.figma.com/api/mcp/asset/07428d26-f429-4243-bcbf-7c7258bcec2a" alt="" width="18" height="13" />
+      </span>
+      <span class="status-icon status-battery">
+        <img src="https://www.figma.com/api/mcp/asset/2bcab747-d4c0-4a15-9215-7aa66c4ca159" alt="" width="29" height="14" />
+      </span>
+    </header>
+
+    <nav class="nav-bar" aria-label="Navigazione principale">
+      <button type="button" class="ld49-skip" id="nav-skip">Salta</button>
+    </nav>
+
+    <main class="body">
+      <header class="tako-header">
+        <div class="tako-header__fade" aria-hidden="true"></div>
+        <div class="logo-wrap" aria-hidden="true">
+          <img src="https://www.figma.com/api/mcp/asset/dd98ddba-4152-4f7e-b37b-c43a06a1f510" alt="" width="37" height="39" />
+        </div>
+      </header>
+      <div class="chat-scroll" id="chatScroll">
+        <div class="chat-scroll-inner">
+          <div class="chat-transcript" id="chatTranscript" aria-live="polite">
+            <div class="bubble-row">
+              <div class="bubble-wrap" data-initial-bubble="1">
+                <div class="bubble" data-node-id="1474:55622">
+                  <p>
+                    <span class="bubble-muted">Prima di guardare i video, </span>puoi dirmi quali contenuti vuoi vedere di piu?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interest-dock" id="interestDock">
+        <section class="interest-card" id="interestCard" data-node-id="1474:55854" aria-label="Selezione interessi">
+          <p class="lead" id="interestLead" data-node-id="1474:55887">Vorrei vedere di piu su</p>
+          <div class="tags" data-node-id="1474:55855" id="tagGroup">
+            <button type="button" class="tag" data-label="Comicità">Comicità</button>
+            <button type="button" class="tag" data-label="Sport">Sport</button>
+            <button type="button" class="tag" data-label="Cibo e Bevande">Cibo e Bevande</button>
+            <button type="button" class="tag" data-label="Intrattenimento e Cultura">Intrattenimento e Cultura</button>
+            <button type="button" class="tag" data-label="Ballo">Ballo</button>
+            <button type="button" class="tag" data-label="Vita Quotidiana">Vita Quotidiana</button>
+            <button type="button" class="tag" data-label="Musica">Musica</button>
+            <button type="button" class="tag" data-label="Gioco">Gioco</button>
+            <button type="button" class="tag" data-label="Famiglia">Famiglia</button>
+            <button type="button" class="tag" data-label="Scienza e Educazione">Scienza e Educazione</button>
+            <button type="button" class="tag" data-label="Fitness e Salute">Fitness e Salute</button>
+            <button type="button" class="tag" data-label="Arte">Arte</button>
+            <button type="button" class="tag" data-label="Bellezza e Stile">Bellezza e Stile</button>
+            <button type="button" class="tag" data-label="Casa e Giardino">Casa e Giardino</button>
+            <button type="button" class="tag" data-label="Grottesco">Grottesco</button>
+            <button type="button" class="tag" data-label="Viaggi">Viaggi</button>
+            <button type="button" class="tag" data-label="Aria aperta">Aria aperta</button>
+            <button type="button" class="tag" data-label="Trucchi e consigli utili">Trucchi e consigli utili</button>
+            <button type="button" class="tag" data-label="Motivazione e Consigli">Motivazione e Consigli</button>
+            <button type="button" class="tag" data-label="Fai da Te">Fai da Te</button>
+            <button type="button" class="tag" data-label="Animali">Animali</button>
+            <button type="button" class="tag" data-label="Anime e Fumetti">Anime e Fumetti</button>
+          </div>
+          <button type="button" class="submit-btn" id="submitBtn" disabled>Invia</button>
+        </section>
+      </div>
+
+      <footer class="bottom-cta" id="bottomCta" aria-hidden="true">
+        <div class="bottom-inner">
+          <div class="btn-row btn-row--continue">
+            <div class="btn-row-spacer" aria-hidden="true"></div>
+            <button type="button" class="cta-btn--primary" id="btnContinue" aria-label="Continua">Continua</button>
+            <div class="btn-row-spacer" aria-hidden="true"></div>
+          </div>
+          <div class="home-indicator" aria-hidden="true"></div>
+        </div>
+      </footer>
+      <div class="home-indicator home-indicator--base" aria-hidden="true"></div>
+    </main>
+
+    <!-- Figma 1635:364015 Feed2 — 本地复现（Figma MCP 资源，7 日内有效） -->
+    <div
+      id="onb-replica-1635"
+      class="onb-replica-screen"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Per te"
+      aria-hidden="true"
+      data-figma-file-key="70QQ04B6k7KbV7tcD9Y438"
+      data-figma-node-id="1635:364015"
+      data-figma-dev-url="https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/%F0%9F%91%8B-2026-onboading?node-id=1635-364015&amp;m=dev"
+    >
+      <div class="r1635-canvas">
+        <div class="r1635-video">
+          <video
+            class="r1635-video-el"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload="auto"
+            poster="https://www.figma.com/api/mcp/asset/ad82f761-ec53-404e-8f4e-3ea7f608e175"
+          >
+            <source src="Viedo/001.mp4" type="video/mp4" />
+          </video>
+          <div class="r1635-ov-top" aria-hidden="true"><img src="https://www.figma.com/api/mcp/asset/8f8e828c-780e-42c9-8069-06a1ff8c004d" alt="" /></div>
+          <div class="r1635-ov-bot" aria-hidden="true"><img src="https://www.figma.com/api/mcp/asset/be23d389-58f5-4245-9f04-573f785e8232" alt="" /></div>
+          <div class="r1635-hero" aria-hidden="true">
+            <p class="r1635-hero-t1">Giappone</p>
+            <p class="r1635-hero-t2">Niseko, Hokkaido</p>
+          </div>
+        </div>
+
+        <div class="r1635-status" aria-hidden="true">
+          <div class="r1635-status-time">8:00</div>
+          <div class="r1635-status-ico r1635-status-ico--sig">
+            <img src="https://www.figma.com/api/mcp/asset/6b917692-52d2-4fe9-8206-e8a4eccc3b2c" alt="" width="21" height="13" />
+          </div>
+          <div class="r1635-status-ico r1635-status-ico--conn">
+            <img src="https://www.figma.com/api/mcp/asset/2d81cca4-2879-4c35-b6df-db8a7be44694" alt="" width="18" height="13" />
+          </div>
+          <div class="r1635-status-ico r1635-status-ico--bat">
+            <img src="https://www.figma.com/api/mcp/asset/42094e3a-b714-4a51-b509-8afaa11c5048" alt="" width="29" height="14" />
+          </div>
+        </div>
+
+        <nav class="r1635-tabbar" aria-label="Feed tabs">
+          <div class="r1635-tab-lead">
+            <img src="https://www.figma.com/api/mcp/asset/671ffade-8181-41bf-9ea7-a278447faef7" alt="" width="24" height="24" />
+          </div>
+          <div class="r1635-tab-center">
+            <span class="r1635-tab">Seguiti</span>
+            <span class="r1635-tab r1635-tab--active">Per te</span>
+          </div>
+          <div class="r1635-tab-trail">
+            <img src="https://www.figma.com/api/mcp/asset/e796dd19-e879-44ac-85b3-496109c1d1a3" alt="" width="24" height="24" />
+          </div>
+        </nav>
+
+        <div class="r1635-dock">
+          <div class="r1635-meta">
+            <div class="r1635-meta-inner">
+              <p class="r1635-meta-user">Alvin</p>
+              <p class="r1635-meta-desc">
+                Posso scoprire sempre piu contenuti che mi piacciono su TikTok e godermeli davvero.
+              </p>
+              <div class="r1635-meta-music">
+                <img src="https://www.figma.com/api/mcp/asset/4d9e31a4-449a-42da-8433-fc9228a22bd4" alt="" width="14" height="14" />
+                <span>Ultra Instinct - adamdevito</span>
+              </div>
+            </div>
+          </div>
+          <aside class="r1635-rail" aria-label="Interazioni">
+            <div class="r1635-rail-ava">
+              <div class="r1635-rail-ava-ring">
+                <img class="r1635-rail-ava-face" src="https://www.figma.com/api/mcp/asset/c387984a-39bf-427c-98ed-a9615c655b03" alt="" width="44" height="44" />
+                <img class="r1635-rail-ava-stroke" src="https://www.figma.com/api/mcp/asset/69ab0c16-c0a1-4e17-8f59-6c54cf0e405e" alt="" width="45" height="45" />
+              </div>
+              <div class="r1635-rail-follow">
+                <img src="https://www.figma.com/api/mcp/asset/1c69424f-7447-4c36-8f49-96bd05cc6052" alt="" width="20" height="20" />
+              </div>
+            </div>
+            <div class="r1635-rail-act">
+              <div class="r1635-feed-ico32 r1635-feed-ico32--like" aria-hidden="true">
+                <div class="r1635-feed-ico32__crop">
+                  <div class="r1635-feed-ico32__bleed">
+                    <img src="https://www.figma.com/api/mcp/asset/bdd0ce2f-f0e1-4eeb-87a1-b703dcd525e0" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span class="r1635-rail-count">12K</span>
+            </div>
+            <div class="r1635-rail-act">
+              <div class="r1635-feed-ico32 r1635-feed-ico32--comment" aria-hidden="true">
+                <div class="r1635-feed-ico32__crop">
+                  <div class="r1635-feed-ico32__bleed">
+                    <img src="https://www.figma.com/api/mcp/asset/b28d1922-852a-4ae6-97e0-a286270ee1a1" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span class="r1635-rail-count">456</span>
+            </div>
+            <div class="r1635-rail-act">
+              <div class="r1635-feed-ico32 r1635-feed-ico32--bookmark" aria-hidden="true">
+                <div class="r1635-feed-ico32__crop">
+                  <div class="r1635-feed-ico32__bleed">
+                    <img src="https://www.figma.com/api/mcp/asset/2083bcf3-0dbd-435c-af1f-af9668b21375" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span class="r1635-rail-count">68</span>
+            </div>
+            <div class="r1635-rail-act">
+              <div class="r1635-feed-ico32 r1635-feed-ico32--share" aria-hidden="true">
+                <div class="r1635-feed-ico32__crop">
+                  <div class="r1635-feed-ico32__bleed">
+                    <img src="https://www.figma.com/api/mcp/asset/d33483e1-2029-4820-8abb-6f9ea2b2ddd9" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span class="r1635-rail-count">43</span>
+            </div>
+            <div class="r1635-rail-disk">
+              <div class="r1635-rail-disk-inner">
+                <img src="https://www.figma.com/api/mcp/asset/d1027078-96c9-4b76-9ff7-eb856d9b01d7" alt="" />
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="r1635-mainnav" aria-hidden="true">
+          <div class="r1635-navrow">
+            <div class="r1635-navcell r1635-navcell--on">
+              <div class="r1635-nav-ico32" aria-hidden="true">
+                <div class="r1635-nav-home24">
+                  <img src="https://www.figma.com/api/mcp/asset/653e649b-159a-40da-a80d-0ae9919efccc" alt="" />
+                </div>
+              </div>
+              <span>Casa</span>
+            </div>
+            <div class="r1635-navcell">
+              <div class="r1635-nav-ico32" aria-hidden="true">
+                <div class="r1635-nav-fr24">
+                  <div class="r1635-nav-fr24-a">
+                    <img src="https://www.figma.com/api/mcp/asset/600894b2-4f6a-46db-bab5-85c879e153bc" alt="" />
+                  </div>
+                  <div class="r1635-nav-fr24-b">
+                    <img src="https://www.figma.com/api/mcp/asset/191b338c-2ef5-4498-a3ea-91241f94ae94" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span>Amici</span>
+            </div>
+            <div class="r1635-navcell--tab3">
+              <div class="r1635-create" aria-hidden="true">
+                <div class="r1635-create-base">
+                  <img src="https://www.figma.com/api/mcp/asset/8ac2dc04-daf9-4251-8796-a782b8a08f74" alt="" />
+                </div>
+                <div class="r1635-create-plus-v">
+                  <div class="r1635-create-vecpad">
+                    <img src="https://www.figma.com/api/mcp/asset/5e5ca669-2d5f-4b83-bfd5-920acdfc7cb9" alt="" />
+                  </div>
+                </div>
+                <div class="r1635-create-plus-h">
+                  <div class="r1635-create-vecpad">
+                    <img src="https://www.figma.com/api/mcp/asset/ccdf71bc-236e-402a-9188-5029cce131b7" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="r1635-navcell">
+              <div class="r1635-nav-ico32" aria-hidden="true">
+                <div class="r1635-nav-inbox24">
+                  <div class="r1635-nav-inbox-inner">
+                    <img src="https://www.figma.com/api/mcp/asset/f23080a5-bece-467d-b2dc-c980d62d676b" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span>Posta</span>
+            </div>
+            <div class="r1635-navcell">
+              <div class="r1635-nav-ico32" aria-hidden="true">
+                <div class="r1635-nav-profile24">
+                  <div class="r1635-nav-profile-inner">
+                    <img src="https://www.figma.com/api/mcp/asset/7bdb7caf-09cd-4aea-9f02-5250ac9dfdfe" alt="" />
+                  </div>
+                </div>
+              </div>
+              <span>Profilo</span>
+            </div>
+          </div>
+          <div class="r1635-home-ind"><div class="r1635-grabber" aria-hidden="true"></div></div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Figma 1635:364498 loading — 本地复现（MCP 资源约 7 日有效） -->
+    <div
+      id="onb-replica-364498"
+      class="onb-replica-screen onb-replica-screen--loading"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Registrazione"
+      aria-hidden="false"
+      data-figma-file-key="70QQ04B6k7KbV7tcD9Y438"
+      data-figma-node-id="1635:364498"
+      data-figma-dev-url="https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/%F0%9F%91%8B-2026-onboading?node-id=1635-364498&amp;m=dev"
+    >
+      <div class="ld49-root">
+        <header class="ld49-status" aria-hidden="true">
+          <span class="ld49-status-time">9:41</span>
+          <div class="ld49-status-trail">
+            <div class="ld49-status-trail-inner">
+              <img src="https://www.figma.com/api/mcp/asset/dfae9f5f-6b1f-41da-b3f1-bb67fe471131" alt="" width="67" height="11" />
+            </div>
+          </div>
+        </header>
+        <nav class="ld49-nav" aria-label="Loading navigation">
+          <button type="button" class="ld49-skip" id="ld49-nav-skip">Salta</button>
+        </nav>
+        <div class="ld49-body">
+          <div class="ld49-hero">
+            <div class="ld49-hero-inner">
+              <div class="ld49-logo" aria-hidden="true">
+                <div class="ld49-logo-img">
+                  <img src="https://www.figma.com/api/mcp/asset/3fadfe2a-6485-476c-82ac-0b6da573a2c8" alt="" />
+                </div>
+              </div>
+              <h1 class="ld49-title">Video per migliorare la tua giornata</h1>
+            </div>
+          </div>
+          <div class="ld49-panel">
+            <button type="button" class="ld49-btn-phone" id="ld49-btn-phone" aria-label="Continua con il telefono">
+              <span class="ld49-btn-phone__gutter" aria-hidden="true"></span>
+              <span class="ld49-btn-phone__row">
+                <span class="ld49-btn-phone__ico" aria-hidden="true">
+                  <span class="ld49-btn-phone__ico-inner">
+                    <img
+                      src="https://www.figma.com/api/mcp/asset/3d13bb70-8b62-44d6-952e-5e813ce985c4"
+                      alt=""
+                      width="20"
+                      height="20"
+                      decoding="async"
+                    />
+                  </span>
+                </span>
+                <span class="ld49-btn-phone__label">Continua con il telefono</span>
+              </span>
+              <span class="ld49-btn-phone__gutter" aria-hidden="true"></span>
+            </button>
+            <div class="ld49-panel-stack">
+              <div class="ld49-or-wrap">
+                <div class="ld49-or-line" aria-hidden="true"></div>
+                <span class="ld49-or-text">Oppure</span>
+                <div class="ld49-or-line" aria-hidden="true"></div>
+              </div>
+              <div class="ld49-social" role="group" aria-label="Continua con un provider">
+                <button type="button" class="ld49-3p ld49-3p--mail" aria-label="Continua con email">
+                  <img class="ld49-3p-ring" src="https://www.figma.com/api/mcp/asset/c020fa2b-e0e4-4583-a378-47b42aeae644" alt="" />
+                  <span class="ld49-3p-ico ld49-3p-ico--mail" aria-hidden="true">
+                    <span class="ld49-3p-ico--mail-inner">
+                      <img src="https://www.figma.com/api/mcp/asset/2d6d0fb2-3946-4fff-912e-bd8fd23dc0c9" alt="" />
+                    </span>
+                  </span>
+                </button>
+                <button type="button" class="ld49-3p ld49-3p--fb" aria-label="Continua con Facebook">
+                  <img class="ld49-3p-ring" src="https://www.figma.com/api/mcp/asset/c020fa2b-e0e4-4583-a378-47b42aeae644" alt="" />
+                  <span class="ld49-3p-ico ld49-3p-ico--fb" aria-hidden="true">
+                    <img src="https://www.figma.com/api/mcp/asset/319529be-0cd7-4bd4-8877-071f20f8d316" alt="" />
+                  </span>
+                </button>
+                <button type="button" class="ld49-3p ld49-3p--apple" aria-label="Continua con Apple">
+                  <img class="ld49-3p-ring" src="https://www.figma.com/api/mcp/asset/c020fa2b-e0e4-4583-a378-47b42aeae644" alt="" />
+                  <span class="ld49-3p-ico ld49-3p-ico--apple" aria-hidden="true">
+                    <span class="ld49-3p-ico--apple-inner">
+                      <img src="https://www.figma.com/api/mcp/asset/5c73788a-0626-4cdd-8143-fc24ef164d1d" alt="" />
+                    </span>
+                  </span>
+                </button>
+                <button type="button" class="ld49-3p ld49-3p--google" aria-label="Continua con Google">
+                  <img class="ld49-3p-ring" src="https://www.figma.com/api/mcp/asset/5e7b0462-48ef-4e38-9dcd-af80339fd3e3" alt="" />
+                  <span class="ld49-3p-ico ld49-3p-ico--google" aria-hidden="true">
+                    <span class="ld49-3p-ico--google-inner">
+                      <img src="https://www.figma.com/api/mcp/asset/2fac61a8-b3c0-4396-a7dd-4b6c4d4a80b8" alt="" />
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="ld49-bottom">
+            <div class="ld49-terms-wrap">
+              <p class="ld49-terms">
+                Continuando, accetti i nostri <a href="#" class="ld49-terms-link">Termini di Servizio</a> e<br />
+                confermi di aver letto la nostra <a href="#" class="ld49-terms-link">Informativa sulla Privacy</a> per capire<br />
+                come raccogliamo, utilizziamo e condividiamo i tuoi dati.
+              </p>
+            </div>
+            <footer class="ld49-footer">
+              <div class="ld49-home-ind" aria-hidden="true"><div class="ld49-grabber"></div></div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var transcript = document.getElementById("chatTranscript");
+      var chatScroll = document.getElementById("chatScroll");
+      var interestDock = document.getElementById("interestDock");
+      var interestCard = document.getElementById("interestCard");
+      var interestLead = document.getElementById("interestLead");
+      var submit = document.getElementById("submitBtn");
+      var tagGroup = document.getElementById("tagGroup");
+      var bottomCta = document.getElementById("bottomCta");
+      var btnContinue = document.getElementById("btnContinue");
+      var deviceEl = document.querySelector(".device");
+      var onbReplica1635 = document.getElementById("onb-replica-1635");
+      var onbReplica364498 = document.getElementById("onb-replica-364498");
+      var navSkip = document.getElementById("nav-skip");
+      var ld49NavSkip = document.getElementById("ld49-nav-skip");
+      var ld49Panel = onbReplica364498 ? onbReplica364498.querySelector(".ld49-panel") : null;
+      /** 关闭首屏 loading 后是否已处理过「进入对话」或「直跳 For You」（避免重复 runInitialSequence） */
+      var chatFlowStarted = false;
+      var FIGMA_NODE_1635_DEV =
+        "https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/%F0%9F%91%8B-2026-onboading?node-id=1635-364015&m=dev";
+      var FIGMA_NODE_364498_DEV =
+        "https://www.figma.com/design/70QQ04B6k7KbV7tcD9Y438/%F0%9F%91%8B-2026-onboading?node-id=1635-364498&m=dev";
+
+      /**
+       * 关闭 loading 首屏。
+       * @param {object} [opts]
+       * @param {boolean} [opts.skipChatStart] 为 true 时不启动对话（例如直接进入 For You）
+       */
+      function closeOnbReplica364498(opts) {
+        var skipChatStart = opts && opts.skipChatStart;
+        if (!deviceEl) return;
+        var wasOpen = deviceEl.classList.contains("is-onb-loading-open");
+        deviceEl.classList.remove("is-onb-loading-open");
+        if (onbReplica364498) onbReplica364498.setAttribute("aria-hidden", "true");
+        if (wasOpen && !chatFlowStarted && !skipChatStart) {
+          chatFlowStarted = true;
+          runInitialSequence();
+        }
+      }
+
+      /** 打开 1635:364498 loading（与 Feed 层互斥） */
+      function openOnbReplica364498() {
+        if (!deviceEl || !onbReplica364498) return;
+        closeOnbReplica1635();
+        deviceEl.classList.add("is-onb-loading-open");
+        onbReplica364498.setAttribute("aria-hidden", "false");
+        deviceEl.dispatchEvent(
+          new CustomEvent("nuj:onb-replica-open", {
+            bubbles: true,
+            detail: {
+              figmaFileKey: "70QQ04B6k7KbV7tcD9Y438",
+              figmaNodeId: "1635:364498",
+              designDevUrl: FIGMA_NODE_364498_DEV,
+            },
+          })
+        );
+      }
+
+      /** 打开 1635:364015 Feed2 本地复现层（与 loading 互斥） */
+      function openOnbReplica1635() {
+        if (!deviceEl || !onbReplica1635) return;
+        closeOnbReplica364498({ skipChatStart: true });
+        if (!chatFlowStarted) chatFlowStarted = true;
+        deviceEl.classList.add("is-onb-replica-open");
+        onbReplica1635.setAttribute("aria-hidden", "false");
+        deviceEl.dispatchEvent(
+          new CustomEvent("nuj:onb-replica-open", {
+            bubbles: true,
+            detail: {
+              figmaFileKey: "70QQ04B6k7KbV7tcD9Y438",
+              figmaNodeId: "1635:364015",
+              designDevUrl: FIGMA_NODE_1635_DEV,
+            },
+          })
+        );
+      }
+
+      function closeOnbReplica1635() {
+        if (!deviceEl || !onbReplica1635) return;
+        deviceEl.classList.remove("is-onb-replica-open");
+        onbReplica1635.setAttribute("aria-hidden", "true");
+      }
+
+      var STEP_MS = 520;
+      var AFTER_TAKO_MS = 380;
+      /** 第二轮：按首轮大类动态扩展细颗粒度选项（意大利语） */
+      var FOLLOWUP = {
+        "Comicità": {
+          q: "Per Comicita, cosa preferisci di piu?",
+          chips: ["Sketch", "Stand-up", "Satira", "Parodia", "Prank"]
+        },
+        Sport: {
+          q: "Per Sport, quali contenuti vuoi vedere di piu?",
+          chips: ["Calcio", "Basket", "Tennis", "Allenamenti", "Highlights"]
+        },
+        "Cibo e Bevande": {
+          q: "Per Cibo e Bevande, cosa ti interessa di piu?",
+          chips: ["Ricette veloci", "Dolci", "Street food", "Recensioni", "Healthy"]
+        },
+        "Intrattenimento e Cultura": {
+          q: "Per Intrattenimento e Cultura, quale area preferisci?",
+          chips: ["Cinema", "Serie TV", "Eventi", "Libri", "Curiosita culturali"]
+        },
+        Ballo: {
+          q: "Per Ballo, quale stile vuoi seguire?",
+          chips: ["Hip-hop", "K-pop", "Latino", "Contemporaneo", "Tutorial"]
+        },
+        "Vita Quotidiana": {
+          q: "Per Vita Quotidiana, quali scene vuoi vedere di piu?",
+          chips: ["Routine", "Famiglia", "Casa", "Lavoro/Studio", "Vlog giornalieri"]
+        },
+        Musica: {
+          q: "Per Musica, cosa preferisci?",
+          chips: ["Pop", "Rap", "Live", "Cover", "Nuove uscite"]
+        },
+        Gioco: {
+          q: "Per Gioco, che tipo di contenuti vuoi?",
+          chips: ["Gameplay", "Competitivo", "Mobile games", "Indie", "Tips & Tricks"]
+        },
+        Famiglia: {
+          q: "Per Famiglia, quali contenuti preferisci?",
+          chips: ["Genitorialita", "Bambini", "Momenti quotidiani", "Consigli pratici", "Attivita insieme"]
+        },
+        "Scienza e Educazione": {
+          q: "Per Scienza e Educazione, quale tema ti interessa di piu?",
+          chips: ["Scienza base", "Tecnologia", "Storia", "Lingue", "Nozioni rapide"]
+        },
+        "Fitness e Salute": {
+          q: "Per Fitness e Salute, su cosa vuoi concentrarti?",
+          chips: ["Cardio", "Forza", "Yoga/Pilates", "Nutrizione", "Benessere mentale"]
+        },
+        Arte: {
+          q: "Per Arte, quale formato preferisci?",
+          chips: ["Disegno", "Pittura", "Arte digitale", "Fotografia", "Process creativo"]
+        },
+        "Bellezza e Stile": {
+          q: "Per Bellezza e Stile, cosa vuoi vedere di piu?",
+          chips: ["Skincare", "Make-up", "Capelli", "Outfit", "Consigli stile"]
+        },
+        "Casa e Giardino": {
+          q: "Per Casa e Giardino, quale contenuto ti interessa di piu?",
+          chips: ["Organizzazione casa", "Pulizia", "Arredamento", "Piante", "Decorazioni"]
+        },
+        Grottesco: {
+          q: "Per Grottesco, che tipo di contenuti preferisci?",
+          chips: ["Humor nero", "Assurdo", "Surreale", "Horror leggero", "Storie strane"]
+        },
+        Viaggi: {
+          q: "Per Viaggi, quale stile preferisci?",
+          chips: ["City break", "Mare", "Montagna", "Low budget", "Guide locali"]
+        },
+        "Aria aperta": {
+          q: "Per Aria aperta, cosa vuoi vedere di piu?",
+          chips: ["Escursioni", "Campeggio", "Ciclismo", "Avventura", "Natura"]
+        },
+        "Trucchi e consigli utili": {
+          q: "Per Trucchi e consigli utili, quali temi ti servono di piu?",
+          chips: ["Casa", "Tecnologia", "Cucina", "Produttivita", "Risparmio tempo"]
+        },
+        "Motivazione e Consigli": {
+          q: "Per Motivazione e Consigli, quale tono preferisci?",
+          chips: ["Mindset", "Carriera", "Studio", "Benessere", "Discorsi motivazionali"]
+        },
+        "Fai da Te": {
+          q: "Per Fai da Te, cosa vuoi realizzare?",
+          chips: ["Decorazioni", "Riparazioni", "Riciclo creativo", "Progetti legno", "Handmade"]
+        },
+        Animali: {
+          q: "Per Animali, quali contenuti ti piacciono di piu?",
+          chips: ["Cani", "Gatti", "Animali esotici", "Addestramento", "Storie divertenti"]
+        },
+        "Anime e Fumetti": {
+          q: "Per Anime e Fumetti, cosa vuoi seguire?",
+          chips: ["Recensioni", "Teorie", "Clip iconiche", "Cosplay", "Novita manga/anime"]
+        }
+      };
+
+      var MULTI_FOLLOWUP_Q = "Hai selezionato piu categorie: quali vuoi che ti consigli di piu?";
+      var FALLBACK_CHIPS = ["Piu rilassanti", "Piu pratici", "Piu originali"];
+
+      var ROUND2_CHIPS = [
+        "Piu vicini ai miei interessi",
+        "Più novità da scoprire",
+        "Raccomandazioni bilanciate",
+        "Priorità ai contenuti popolari",
+        "Meno contenuti ripetitivi"
+      ];
+
+      var ALL_TAGS_22 = [
+        "Comicità",
+        "Sport",
+        "Cibo e Bevande",
+        "Intrattenimento e Cultura",
+        "Ballo",
+        "Vita Quotidiana",
+        "Musica",
+        "Gioco",
+        "Famiglia",
+        "Scienza e Educazione",
+        "Fitness e Salute",
+        "Arte",
+        "Bellezza e Stile",
+        "Casa e Giardino",
+        "Grottesco",
+        "Viaggi",
+        "Aria aperta",
+        "Trucchi e consigli utili",
+        "Motivazione e Consigli",
+        "Fai da Te",
+        "Animali",
+        "Anime e Fumetti"
+      ];
+
+      var conversationRound = 0;
+      var submitted = false;
+      var tagDelegationBound = false;
+
+      /** 同步滚到底：用 max scrollTop，避免 dock/CTA 变高后仍停在旧 scrollTop 导致最后一条被挡在视口下缘 */
+      function scrollChatToBottom() {
+        if (!chatScroll) return;
+        var max = chatScroll.scrollHeight - chatScroll.clientHeight;
+        chatScroll.scrollTop = max > 0 ? max : 0;
+      }
+
+      /** 底部 dock / Continue 区高度随过渡变化时，立刻把对话区滚到可滚动的最底，与布局同步「顶上去」 */
+      function bindScrollSnapToBottomChrome() {
+        if (typeof ResizeObserver === "undefined") return;
+        var ro = new ResizeObserver(function () {
+          scrollChatToBottom();
+        });
+        if (interestDock) ro.observe(interestDock);
+        if (bottomCta) ro.observe(bottomCta);
+      }
+
+      /**
+       * 折行后再收口：仅用 max-width（不写 width）。
+       * 若在行宽下已占满再量 getClientRects，行盒≈整行宽会收不动；故在宽度=cap 的离屏容器里克隆气泡，
+       * 用 clone.offsetWidth 取「折行后实际包裹宽」（含 padding）。
+       */
+      function tightenOneBubble(bubble) {
+        if (!bubble || !bubble.isConnected) return;
+        var wrap = bubble.closest(".bubble-wrap");
+        if (wrap && !wrap.classList.contains("is-visible")) return;
+
+        function rowCapPx() {
+          var row = bubble.closest(".bubble-row");
+          if (!row) return Infinity;
+          var rcs = window.getComputedStyle(row);
+          var rp = (parseFloat(rcs.paddingLeft) || 0) + (parseFloat(rcs.paddingRight) || 0);
+          return Math.max(0, row.clientWidth - rp);
+        }
+
+        function measureMaxLinePxFor(el) {
+          var range = document.createRange();
+          try {
+            range.selectNodeContents(el);
+          } catch (e) {
+            return 0;
+          }
+          var rectList = range.getClientRects();
+          var maxW = 0;
+          var i;
+          for (i = 0; i < rectList.length; i++) {
+            var r = rectList[i];
+            if (r.height < 2) continue;
+            if (r.width > maxW) maxW = r.width;
+          }
+          return maxW;
+        }
+
+        function applyTighten() {
+          bubble.style.maxWidth = "";
+          var cap = rowCapPx();
+          var cs = window.getComputedStyle(bubble);
+          var padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+          var floorMin = Math.ceil(padX + 12);
+          if (!isFinite(cap) || cap < 48) return;
+
+          var holder = document.createElement("div");
+          holder.setAttribute("aria-hidden", "true");
+          holder.style.cssText =
+            "position:absolute;visibility:hidden;pointer-events:none;left:-9999px;top:0;width:" +
+            Math.floor(cap) +
+            "px;";
+          var clone = bubble.cloneNode(true);
+          clone.style.maxWidth = "100%";
+          clone.style.width = "auto";
+          clone.style.margin = "0";
+          holder.appendChild(clone);
+          document.body.appendChild(holder);
+
+          var tightW = clone.offsetWidth;
+          var ccs = window.getComputedStyle(clone);
+          var cpad = (parseFloat(ccs.paddingLeft) || 0) + (parseFloat(ccs.paddingRight) || 0);
+          var maxLine = measureMaxLinePxFor(clone);
+          document.body.removeChild(holder);
+
+          var slack = 10;
+          var fromRects = maxLine > 0 ? Math.ceil(maxLine + cpad + slack) : 0;
+          var target;
+          if (tightW > 0 && tightW < cap - 4) {
+            target = Math.min(cap, Math.ceil(tightW + 2));
+          } else if (fromRects > floorMin) {
+            target = Math.min(cap, fromRects);
+          } else {
+            return;
+          }
+          if (target < floorMin) return;
+          bubble.style.maxWidth = target + "px";
+        }
+
+        requestAnimationFrame(function () {
+          applyTighten();
+        });
+      }
+
+      function scheduleTightenForWrap(wrap) {
+        if (!wrap) return;
+        var b = wrap.querySelector(".bubble");
+        if (b) tightenOneBubble(b);
+      }
+
+      function tightenAllVisibleBubbles() {
+        if (!transcript) return;
+        transcript.querySelectorAll(".bubble-wrap.is-visible .bubble").forEach(tightenOneBubble);
+      }
+
+      var tightenResizeTimer;
+      function onResizeTightenBubbles() {
+        clearTimeout(tightenResizeTimer);
+        tightenResizeTimer = setTimeout(function () {
+          tightenAllVisibleBubbles();
+          clampTagsToVisibleArea();
+        }, 120);
+      }
+
+      window.addEventListener("resize", onResizeTightenBubbles);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          tightenAllVisibleBubbles();
+          clampTagsToVisibleArea();
+        });
+      }
+
+      /**
+       * skipScroll：提交流程里先出气泡最后再滚。
+       * afterVisible：在挂上 is-visible 的同一轮里同步调用（可里立刻 scrollChatToBottom）。
+       */
+      function reveal(el, delay, skipScroll, afterVisible) {
+        setTimeout(function () {
+          el.classList.add("is-visible");
+          if (typeof afterVisible === "function") afterVisible(el);
+          if (!skipScroll) scrollChatToBottom();
+          scheduleTightenForWrap(el);
+        }, delay);
+      }
+
+      function runInitialSequence() {
+        var takoHeaderEl = document.querySelector(".tako-header");
+        var bubbles = transcript.querySelectorAll(".bubble-wrap[data-initial-bubble]");
+        var t = 350;
+        /* 与首条气泡同一时刻出现，避免头像先亮、气泡后出的错位感 */
+        if (takoHeaderEl) {
+          reveal(takoHeaderEl, t, true);
+        }
+        bubbles.forEach(function (wrap, i) {
+          reveal(wrap, t + i * STEP_MS);
+        });
+        var afterBubbles = t + bubbles.length * STEP_MS + AFTER_TAKO_MS;
+        setTimeout(function () {
+          interestCard.classList.add("is-visible");
+        }, afterBubbles);
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function mergeFollowupChips(labels) {
+        var seen = {};
+        var merged = [];
+        (labels || []).forEach(function (lab) {
+          var block = FOLLOWUP[lab];
+          if (!block || !block.chips) return;
+          block.chips.forEach(function (c) {
+            if (seen[c]) return;
+            seen[c] = true;
+            merged.push(c);
+          });
+        });
+        if (!merged.length) return FALLBACK_CHIPS.slice();
+        merged = merged.filter(function (x) {
+          return x !== "Other" && x !== "Altro";
+        });
+        if (merged.length > 9) merged = merged.slice(0, 9);
+        return merged;
+      }
+
+      function followupQuestionFor(labels) {
+        if (!labels || !labels.length) return MULTI_FOLLOWUP_Q;
+        if (labels.length === 1 && FOLLOWUP[labels[0]]) return FOLLOWUP[labels[0]].q;
+        return MULTI_FOLLOWUP_Q;
+      }
+
+      function labelVisualWeight(label) {
+        var s = String(label || "");
+        var cjkCount = (s.match(/[\u3400-\u9FFF]/g) || []).length;
+        var latinCount = s.length - cjkCount;
+        /* 拉丁字符平均更窄，按视觉宽度估算权重 */
+        return cjkCount * 1 + latinCount * 0.62;
+      }
+
+      /**
+       * 估算标签视觉宽度（含左右 padding + border），用于紧凑装箱。
+       */
+      function estimateTagWidthPx(label) {
+        var w = labelVisualWeight(label) * 13 + 34;
+        if (w < 92) return 92;
+        return Math.ceil(w);
+      }
+
+      /**
+       * 动态紧凑重排：按当前容器宽度做“逐行 best-fit 装箱”，尽量填满每一行，减少右侧空白。
+       */
+      function sortLabelsForCompactLayout(labels) {
+        var src = (labels || []).slice();
+        if (src.length <= 2 || !tagGroup) return src;
+
+        var maxRowWidth = tagGroup.clientWidth || 0;
+        var gapX = 10; /* 与 .tags 横向 gap 对齐 */
+        if (maxRowWidth <= 0) return src;
+
+        var pool = src
+          .map(function (label) {
+            return { label: label, w: estimateTagWidthPx(label) };
+          })
+          .sort(function (a, b) {
+            return b.w - a.w;
+          });
+
+        var rows = [];
+        while (pool.length) {
+          var remain = maxRowWidth;
+          var row = [];
+
+          while (pool.length) {
+            var bestIdx = -1;
+            var bestSlack = Infinity;
+            var i;
+            for (i = 0; i < pool.length; i++) {
+              var need = pool[i].w + (row.length ? gapX : 0);
+              if (need > remain) continue;
+              var slack = remain - need;
+              if (slack < bestSlack) {
+                bestSlack = slack;
+                bestIdx = i;
+              }
+            }
+
+            if (bestIdx === -1) {
+              if (!row.length) {
+                /* 单个超长项也要推进，避免死循环 */
+                row.push(pool.shift());
+              }
+              break;
+            }
+
+            var picked = pool.splice(bestIdx, 1)[0];
+            row.push(picked);
+            remain -= picked.w + (row.length > 1 ? gapX : 0);
+          }
+
+          rows.push(row);
+        }
+
+        return rows
+          .map(function (row) {
+            return row.map(function (x) {
+              return x.label;
+            });
+          })
+          .reduce(function (acc, row) {
+            return acc.concat(row);
+          }, []);
+      }
+
+      function renderTagButtons(labels) {
+        var cleaned = (labels || []).filter(function (label) {
+          var t = String(label || "").trim().toLowerCase();
+          return t !== "other" && t !== "altro";
+        });
+        var ordered = sortLabelsForCompactLayout(cleaned);
+        tagGroup.innerHTML = ordered
+          .map(function (label) {
+            var safe = escapeHtml(label);
+            return (
+              '<button type="button" class="tag" data-label="' +
+              safe +
+              '" aria-pressed="false">' +
+              safe +
+              "</button>"
+            );
+          })
+          .join("");
+        clampTagsToVisibleArea();
+        syncSubmitState();
+      }
+
+      /**
+       * 适配小屏：tag 区超过可视高度时，从末尾开始隐藏，确保内容不超出卡片可视区域。
+       */
+      function clampTagsToVisibleArea() {
+        if (!tagGroup) return;
+        var tags = Array.prototype.slice.call(tagGroup.querySelectorAll(".tag"));
+        if (!tags.length) return;
+
+        /* 需求：22 条全部展示，不隐藏；超出时仅在卡片内滚动 */
+        tags.forEach(function (tag) {
+          tag.hidden = false;
+          tag.classList.remove("tag--overflow-hidden");
+        });
+      }
+
+      function syncSubmitState() {
+        var tags = tagGroup.querySelectorAll(".tag");
+        var any = false;
+        tags.forEach(function (t) {
+          if (t.getAttribute("aria-pressed") === "true") any = true;
+        });
+        submit.disabled = !any;
+      }
+
+      function setTagsDisabled(dis) {
+        tagGroup.querySelectorAll(".tag").forEach(function (t) {
+          t.disabled = !!dis;
+        });
+      }
+
+      function bindTagDelegation() {
+        if (tagDelegationBound) return;
+        tagDelegationBound = true;
+        tagGroup.addEventListener("click", function (e) {
+          var tag = e.target.closest(".tag");
+          if (!tag || tag.disabled) return;
+          var on = tag.getAttribute("aria-pressed") === "true";
+          tag.setAttribute("aria-pressed", on ? "false" : "true");
+          syncSubmitState();
+        });
+      }
+
+      function collectSelectedLabels() {
+        var labels = [];
+        tagGroup.querySelectorAll(".tag").forEach(function (t) {
+          if (t.getAttribute("aria-pressed") === "true") {
+            labels.push(t.getAttribute("data-label") || t.textContent.trim());
+          }
+        });
+        return labels;
+      }
+
+      function createUserBubbleRow(text) {
+        var row = document.createElement("div");
+        row.className = "bubble-row bubble-row--user";
+        var wrap = document.createElement("div");
+        wrap.className = "bubble-wrap";
+        var bubble = document.createElement("div");
+        bubble.className = "bubble bubble--user";
+        var p = document.createElement("p");
+        p.textContent = text;
+        bubble.appendChild(p);
+        wrap.appendChild(bubble);
+        row.appendChild(wrap);
+        transcript.appendChild(row);
+        return wrap;
+      }
+
+      function createTakoBubbleRow(text) {
+        var row = document.createElement("div");
+        row.className = "bubble-row";
+        var wrap = document.createElement("div");
+        wrap.className = "bubble-wrap";
+        var bubble = document.createElement("div");
+        bubble.className = "bubble";
+        var p = document.createElement("p");
+        p.textContent = text;
+        bubble.appendChild(p);
+        wrap.appendChild(bubble);
+        row.appendChild(wrap);
+        transcript.appendChild(row);
+        return wrap;
+      }
+
+      function dedupeOrdered(labels) {
+        var seen = {};
+        return (labels || []).filter(function (l) {
+          if (seen[l]) return false;
+          seen[l] = true;
+          return true;
+        });
+      }
+
+      /** 多选合并为一条用户气泡，选项用顿号连接 */
+      function showUserBubbleCombined(labels, prefix, startDelay) {
+        if (!labels || !labels.length) return startDelay;
+        var joined = dedupeOrdered(labels).join("、");
+        var text = prefix + joined;
+        setTimeout(function () {
+          var wrap = createUserBubbleRow(text);
+          reveal(wrap, 40, true);
+        }, startDelay);
+        return startDelay + 480;
+      }
+
+      function staggerTakoMessages(lines, startDelay, stepMs, onDone) {
+        if (!lines || !lines.length) {
+          if (onDone) onDone();
+          return;
+        }
+        var n = lines.length;
+        for (var i = 0; i < n; i++) {
+          (function (line, idx) {
+            var delay = startDelay + idx * stepMs;
+            setTimeout(function () {
+              var wrap = createTakoBubbleRow(line);
+              reveal(
+                wrap,
+                40,
+                true,
+                function () {
+                  scrollChatToBottom();
+                  if (onDone && idx === n - 1) onDone();
+                }
+              );
+            }, delay);
+          })(lines[i], i);
+        }
+      }
+
+      function hideDockThen(fn, delayMs) {
+        interestCard.classList.remove("is-visible");
+        setTimeout(function () {
+          interestDock.classList.add("interest-dock--hidden");
+          if (fn) fn();
+        }, delayMs || 320);
+      }
+
+      function openDockAfterTakoReveal(opts) {
+        interestLead.textContent = opts.lead || "Vorrei vedere di piu su";
+        renderTagButtons(opts.chips);
+        /*
+         * 首屏 dock 本就展开，仅 interest-card 做 opacity + scale；若此处 dock 也做过渡，
+         * 会与卡片入场叠在一起，第二三轮观感与首轮不一致。展开 dock 时临时关掉其 transition，对齐首卡。
+         */
+        interestDock.style.setProperty("transition", "none");
+        interestDock.classList.remove("interest-dock--hidden");
+        void interestDock.offsetHeight;
+        interestDock.style.removeProperty("transition");
+        interestCard.classList.remove("is-visible");
+        void interestCard.offsetHeight;
+        interestCard.classList.add("is-visible");
+        clampTagsToVisibleArea();
+        scrollChatToBottom();
+        submitted = false;
+        submit.disabled = true;
+        setTagsDisabled(false);
+        syncSubmitState();
+      }
+
+      function onSubmitRound0(labels) {
+        hideDockThen(null, 320);
+        var afterUsers = showUserBubbleCombined(labels, "Preferisco vedere · ", 200);
+        var q = followupQuestionFor(labels);
+        var takoOne = "Perfetto, ricevuto! Ti faccio un'altra domanda: " + q;
+        staggerTakoMessages([takoOne], afterUsers + 400, STEP_MS, function () {
+          conversationRound = 1;
+          openDockAfterTakoReveal({
+            lead: "Vorrei vedere anche questi: (selezione multipla)",
+            chips: mergeFollowupChips(labels)
+          });
+        });
+      }
+
+      function onSubmitRound1(labels) {
+        hideDockThen(null, 320);
+        var afterUsers = showUserBubbleCombined(labels, "Tendo di più verso · ", 200);
+        var joined = dedupeOrdered(labels).join(", ");
+        var takoOne =
+          "Ottimo, hai selezionato " +
+          joined +
+          ". Preferisci che ti consigli in base ai tuoi gusti o che ti mostri più contenuti nuovi?";
+        staggerTakoMessages([takoOne], afterUsers + 400, STEP_MS, function () {
+          conversationRound = 2;
+          openDockAfterTakoReveal({
+            lead: "Come vuoi che consigli i contenuti: (selezione multipla)",
+            chips: ROUND2_CHIPS.slice()
+          });
+        });
+      }
+
+      function onSubmitRound2(labels) {
+        hideDockThen(null, 320);
+        showUserBubbleCombined(labels, "Per i consigli preferisco · ", 200);
+        var after = 200 + 480;
+        var takoOne =
+          "Perfetto, terrò conto delle tue preferenze. Vai pure a guardare: se i tuoi gusti cambiano, torna quando vuoi!";
+        staggerTakoMessages([takoOne], after + 400, STEP_MS, function () {
+          conversationRound = 3;
+          submitted = true;
+          submit.disabled = true;
+          if (bottomCta) {
+            bottomCta.setAttribute("aria-hidden", "false");
+            bottomCta.classList.add("is-visible");
+            scrollChatToBottom();
+          }
+        });
+      }
+
+      submit.addEventListener("click", function () {
+        if (submitted || submit.disabled) return;
+        var labels = collectSelectedLabels();
+        if (!labels.length) return;
+
+        submitted = true;
+        submit.disabled = true;
+        setTagsDisabled(true);
+
+        if (conversationRound === 0) {
+          onSubmitRound0(labels);
+          return;
+        }
+        if (conversationRound === 1) {
+          onSubmitRound1(labels);
+          return;
+        }
+        if (conversationRound === 2) {
+          onSubmitRound2(labels);
+          return;
+        }
+      });
+
+      if (btnContinue && deviceEl) {
+        btnContinue.addEventListener("click", function () {
+          deviceEl.dispatchEvent(
+            new CustomEvent("nuj:continue", { bubbles: true, detail: { source: "chat-complete" } })
+          );
+          openOnbReplica1635();
+        });
+      }
+
+      if (ld49NavSkip) {
+        ld49NavSkip.addEventListener("click", function () {
+          closeOnbReplica364498();
+        });
+      }
+
+      if (ld49Panel) {
+        ld49Panel.addEventListener("click", function (e) {
+          var btn = e.target.closest("button");
+          if (!btn || !ld49Panel.contains(btn)) return;
+          closeOnbReplica364498();
+        });
+      }
+
+      if (onbReplica364498) {
+        onbReplica364498.querySelectorAll(".ld49-terms-link").forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+          });
+        });
+      }
+
+      if (navSkip && deviceEl) {
+        navSkip.addEventListener("click", function () {
+          deviceEl.dispatchEvent(
+            new CustomEvent("nuj:skip", { bubbles: true, detail: { conversationRound: conversationRound } })
+          );
+          openOnbReplica1635();
+        });
+      }
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape") return;
+        if (deviceEl && deviceEl.classList.contains("is-onb-loading-open")) {
+          e.preventDefault();
+          closeOnbReplica364498();
+          return;
+        }
+        if (deviceEl && deviceEl.classList.contains("is-onb-replica-open")) {
+          e.preventDefault();
+          closeOnbReplica1635();
+        }
+      });
+
+      window.openOnbReplica364498 = openOnbReplica364498;
+      window.closeOnbReplica364498 = closeOnbReplica364498;
+
+      /* 某些浏览器进入页面后不会自动播放，手动触发一次播放 */
+      document.querySelectorAll(".r1635-video-el").forEach(function (v) {
+        if (!v) return;
+        v.muted = true;
+        var p = v.play && v.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(function () {});
+        }
+      });
+
+      bindScrollSnapToBottomChrome();
+      bindTagDelegation();
+      /* 首屏为 loading：runInitialSequence 在首次关闭 loading 时执行（见 closeOnbReplica364498） */
+    })();
+  </script>
+</body>
+</html>
