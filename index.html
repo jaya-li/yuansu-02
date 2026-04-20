@@ -2581,6 +2581,7 @@
         "Animali",
         "Anime e Fumetti"
       ];
+      var INITIAL_TAGS = ALL_TAGS_22.slice();
 
       var conversationRound = 0;
       var submitted = false;
@@ -2701,6 +2702,8 @@
         clearTimeout(tightenResizeTimer);
         tightenResizeTimer = setTimeout(function () {
           tightenAllVisibleBubbles();
+          /* 屏宽变化后，按新宽度重新做紧凑排序（保留选中态） */
+          rerenderCurrentTagsPreserveState();
           clampTagsToVisibleArea();
         }, 120);
       }
@@ -2739,6 +2742,8 @@
         });
         var afterBubbles = t + bubbles.length * STEP_MS + AFTER_TAKO_MS;
         setTimeout(function () {
+          /* 首卡也统一走动态紧凑排序 */
+          renderTagButtons(INITIAL_TAGS);
           interestCard.classList.add("is-visible");
         }, afterBubbles);
       }
@@ -2803,6 +2808,16 @@
         var maxRowWidth = tagGroup.clientWidth || 0;
         var gapX = 10; /* 与 .tags 横向 gap 对齐 */
         if (maxRowWidth <= 0) return src;
+
+        /* 首轮优先“短标签先显示”，让首屏能看到尽可能多的选项 */
+        if (conversationRound === 0) {
+          return src.sort(function (a, b) {
+            var aw = estimateTagWidthPx(a);
+            var bw = estimateTagWidthPx(b);
+            if (aw !== bw) return aw - bw;
+            return String(a).localeCompare(String(b));
+          });
+        }
 
         var pool = src
           .map(function (label) {
@@ -2877,6 +2892,24 @@
           })
           .join("");
         clampTagsToVisibleArea();
+        syncSubmitState();
+      }
+
+      function rerenderCurrentTagsPreserveState() {
+        if (!tagGroup) return;
+        var labels = [];
+        var pressed = {};
+        tagGroup.querySelectorAll(".tag").forEach(function (t) {
+          var label = t.getAttribute("data-label") || t.textContent.trim();
+          labels.push(label);
+          if (t.getAttribute("aria-pressed") === "true") pressed[label] = true;
+        });
+        if (!labels.length) labels = INITIAL_TAGS.slice();
+        renderTagButtons(labels);
+        tagGroup.querySelectorAll(".tag").forEach(function (t) {
+          var label = t.getAttribute("data-label") || t.textContent.trim();
+          if (pressed[label]) t.setAttribute("aria-pressed", "true");
+        });
         syncSubmitState();
       }
 
@@ -3180,6 +3213,8 @@
 
       bindScrollSnapToBottomChrome();
       bindTagDelegation();
+      /* 页面初始就重渲染一次，避免静态 HTML 顺序导致空白较大 */
+      renderTagButtons(INITIAL_TAGS);
       /* 首屏为 loading：runInitialSequence 在首次关闭 loading 时执行（见 closeOnbReplica364498） */
     })();
   </script>
